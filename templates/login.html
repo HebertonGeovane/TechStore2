@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <title>Login - TechShop</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+</head>
+<body class="bg-gray-100 flex items-center justify-center min-h-screen">
+
+  <div class="bg-white p-10 rounded shadow w-full max-w-md">
+    <h1 class="text-3xl font-bold mb-6 text-center">Login</h1>
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        <ul class="mb-4">
+          {% for category, message in messages %}
+            <li class="text-{{ 'red-600' if category == 'error' else ('green-600' if category == 'success' else 'yellow-600') }} mb-2">{{ message }}</li>
+          {% endfor %}
+        </ul>
+      {% endif %}
+    {% endwith %}
+
+    <form method="POST" class="space-y-4">
+      <div>
+        <label for="usuario" class="block mb-1 font-semibold">Usuário</label>
+        <input type="text" id="usuario" name="usuario" required
+          class="w-full p-3 border border-gray-300 rounded focus:outline-yellow-400" />
+      </div>
+
+      <div>
+        <label for="senha" class="block mb-1 font-semibold">Senha</label>
+        <input type="password" id="senha" name="senha" required
+          class="w-full p-3 border border-gray-300 rounded focus:outline-yellow-400" />
+      </div>
+
+      <button type="submit"
+        class="w-full bg-yellow-400 hover:bg-yellow-500 text-black font-bold py-3 rounded text-lg">
+        Entrar
+      </button>
+    </form>
+  </div>
+
+</body>
+</html>

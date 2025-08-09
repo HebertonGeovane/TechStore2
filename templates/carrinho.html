@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Carrinho - TechShop</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/js/all.min.js"></script>
+</head>
+<body class="bg-gray-100 flex flex-col min-h-screen">
+
+  <!-- HEADER -->
+  <header class="bg-[#232f3e] text-white py-4 px-6 flex justify-between items-center">
+    <h1 class="text-2xl font-bold">TechShop</h1>
+    <nav class="flex space-x-6">
+      <a href="/" class="hover:text-yellow-400 flex items-center gap-2">
+        <i class="fa-solid fa-house"></i> Home
+      </a>
+      <a href="/carrinho" class="hover:text-yellow-400 flex items-center gap-2">
+        <i class="fa-solid fa-cart-shopping"></i> Carrinho
+      </a>
+      <a href="{{ url_for('logout') if session.get('usuario_logado') else url_for('login') }}" class="hover:text-yellow-400 flex items-center gap-2">
+        <i class="fa-solid fa-user"></i> {{ session.get('usuario_logado') or 'Login' }}
+      </a>
+    </nav>
+  </header>
+
+  <!-- CONTEÚDO -->
+  <main class="flex-grow px-6 py-10 max-w-6xl mx-auto bg-white shadow rounded">
+    <h2 class="text-3xl font-bold mb-8">Seu Carrinho</h2>
+
+    {% if carrinho %}
+      <div class="flex flex-col lg:flex-row justify-between gap-10">
+        <!-- Lista de produtos -->
+        <div class="flex-1 space-y-6">
+          {% for item in carrinho %}
+            <div class="flex items-center justify-between border-b pb-6">
+              <div class="flex items-center gap-6">
+                <img src="{{ item.produto.imagem_url }}" class="w-28 h-28 object-cover rounded shadow" alt="{{ item.produto.nome }}">
+                <div>
+                  <h3 class="text-xl font-semibold">{{ item.produto.nome }}</h3>
+                  <p class="text-gray-700 text-lg">R$ {{ "%.2f"|format(item.produto.preco) }}</p>
+                </div>
+              </div>
+
+              <div class="flex items-center gap-4">
+                <form method="post" action="/alterar-quantidade" class="flex items-center gap-2">
+                  <input type="hidden" name="produto_id" value="{{ item.produto.id }}">
+                  <button name="acao" value="diminuir" class="px-3 py-1 bg-gray-300 rounded text-xl">-</button>
+                  <span class="px-3 text-xl">{{ item.quantidade }}</span>
+                  <button name="acao" value="aumentar" class="px-3 py-1 bg-gray-300 rounded text-xl">+</button>
+                </form>
+
+                <form method="post" action="/remover">
+                  <input type="hidden" name="produto_id" value="{{ item.produto.id }}">
+                  <button class="text-red-500 text-2xl" title="Remover"><i class="fa-solid fa-trash"></i></button>
+                </form>
+              </div>
+            </div>
+          {% endfor %}
+        </div>
+
+        <!-- Resumo ao lado direito -->
+        <div class="w-full lg:w-1/3 bg-gray-100 p-6 rounded shadow mt-10 lg:mt-0">
+          <h3 class="text-xl font-bold mb-4 text-right text-green-600">Subtotal: R$ {{ total }}</h3>
+
+          <div class="flex flex-col items-end gap-4">
+            <a href="/" class="bg-white border border-yellow-400 text-yellow-500 px-6 py-2 rounded hover:bg-yellow-50 text-lg">
+              ← Continuar comprando
+            </a>
+            <a href="/checkout" class="bg-yellow-400 hover:bg-yellow-500 text-black px-6 py-3 font-bold rounded text-lg">
+              Finalizar Compra
+            </a>
+          </div>
+        </div>
+      </div>
+
+    {% else %}
+      <p class="text-gray-600">Seu carrinho está vazio.</p>
+      <a href="/" class="mt-4 inline-block text-blue-600 hover:underline">Voltar para loja</a>
+    {% endif %}
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="bg-[#232f3e] text-white px-6 py-12 mt-10">
+    <div class="max-w-7xl mx-auto flex flex-col lg:flex-row justify-between gap-10">
+      <div class="flex-1">
+        <h3 class="text-xl font-bold mb-2">Assine nossa Newsletter</h3>
+        <p class="mb-4">Receba novidades e ofertas especiais diretamente no seu e-mail.</p>
+        <form class="flex flex-col sm:flex-row gap-2">
+          <input type="email" placeholder="Seu e-mail" class="px-4 py-2 rounded text-black w-full sm:w-auto flex-1">
+          <button type="submit" class="bg-yellow-400 text-black px-4 py-2 rounded">Inscrever</button>
+        </form>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10 flex-1 mt-10 lg:mt-0">
+        <div>
+          <h4 class="text-lg font-semibold mb-2">Conheça-nos</h4>
+          <ul class="space-y-1 text-sm">
+            <li>Sobre Nós</li>
+            <li>Carreiras</li>
+            <li>Comunicados</li>
+            <li>TechStore Science</li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="text-lg font-semibold mb-2">Ganhe dinheiro conosco</h4>
+          <ul class="space-y-1 text-sm">
+            <li>Venda seus produtos</li>
+            <li>Seja um afiliado</li>
+            <li>Publique seus livros</li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="text-lg font-semibold mb-2">Ajuda</h4>
+          <ul class="space-y-1 text-sm">
+            <li>Sua conta</li>
+            <li>Frete e entrega</li>
+            <li>Devoluções</li>
+            <li>Ajuda</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="border-t border-gray-600 mt-10 pt-6 text-center text-sm text-gray-300">
+      <p>Brasil | © 2021-2025 TechStore. Todos os direitos reservados.</p>
+      <p>Termos de uso | Política de Privacidade | Cookies</p>
+    </div>
+  </footer>
+</body>
+</html>

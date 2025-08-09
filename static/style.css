@@ -1,0 +1,88 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f5f5f5;
+    margin: 0;
+}
+
+header {
+    background-color: #111;
+    color: white;
+    padding: 20px;
+    text-align: center;
+}
+
+nav a {
+    color: #fff;
+    margin: 0 15px;
+    text-decoration: none;
+}
+
+.produtos-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 30px;
+    padding: 40px;
+}
+
+.produto {
+    background-color: white;
+    border-radius: 10px;
+    padding: 20px;
+    width: 250px;
+    text-align: center;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+.produto-img {
+    width: 220px;
+    height: 220px;
+    object-fit: cover;
+    border-radius: 10px;
+}
+
+.preco {
+    font-size: 18px;
+    font-weight: bold;
+    color: #2e7d32;
+}
+
+.botao {
+    display: inline-block;
+    background-color: #000;
+    color: white;
+    padding: 10px 20px;
+    margin-top: 10px;
+    border-radius: 5px;
+    text-decoration: none;
+}
+
+.detalhe-produto {
+    display: flex;
+    justify-content: center;
+    gap: 50px;
+    padding: 50px;
+    align-items: flex-start;
+}
+
+.imagem-detalhe {
+    width: 450px;
+    height: 450px;
+    object-fit: cover;
+    border-radius: 12px;
+}
+
+.info-produto {
+    max-width: 500px;
+}
+
+.avaliacao {
+    color: gold;
+    font-size: 20px;
+    margin-bottom: 10px;
+}
+
+.descricao-tecnica {
+    list-style: disc;
+    padding-left: 20px;
+}

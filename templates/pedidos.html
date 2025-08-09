@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <title>Pedidos - TechShop</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/js/all.min.js"></script>
+</head>
+<body class="bg-gray-100 flex flex-col min-h-screen">
+
+  <!-- HEADER -->
+  <header class="bg-[#232f3e] text-white py-4 px-6 flex justify-between items-center">
+    <h1 class="text-2xl font-bold">TechShop</h1>
+    <nav class="flex space-x-6">
+      <a href="/" class="hover:text-yellow-400 flex items-center gap-2">
+        <i class="fa-solid fa-house"></i> Home
+      </a>
+      <a href="/carrinho" class="hover:text-yellow-400 flex items-center gap-2">
+        <i class="fa-solid fa-cart-shopping"></i> Carrinho
+      </a>
+      <a href="/pedidos" class="hover:text-yellow-400 flex items-center gap-2 font-bold underline">
+        <i class="fa-solid fa-list-check"></i> Pedidos
+      </a>
+      <a href="#" class="hover:text-yellow-400"><i class="fa-solid fa-user"></i></a>
+    </nav>
+  </header>
+
+  <!-- CONTEÚDO PRINCIPAL -->
+  <main class="flex-grow px-6 py-10 max-w-7xl mx-auto bg-white shadow rounded">
+
+    <h2 class="text-3xl font-bold mb-8">Pedidos Realizados</h2>
+
+    {% if pedidos %}
+    <div class="overflow-x-auto">
+      <table class="min-w-full border border-gray-300">
+        <thead class="bg-gray-200">
+          <tr>
+            <th class="border border-gray-300 px-4 py-2 text-left">ID</th>
+            <th class="border border-gray-300 px-4 py-2 text-left">Cliente</th>
+            <th class="border border-gray-300 px-4 py-2 text-left">Endereço</th>
+            <th class="border border-gray-300 px-4 py-2 text-left">CEP</th>
+            <th class="border border-gray-300 px-4 py-2 text-left">Data do Pedido</th>
+            <th class="border border-gray-300 px-4 py-2 text-left">Total (R$)</th>
+            <th class="border border-gray-300 px-4 py-2 text-left">Produtos</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for pedido in pedidos %}
+          <tr class="even:bg-gray-50">
+            <td class="border border-gray-300 px-4 py-2">{{ pedido.id }}</td>
+            <td class="border border-gray-300 px-4 py-2">{{ pedido.nome }} {{ pedido.sobrenome }}</td>
+            <td class="border border-gray-300 px-4 py-2">{{ pedido.endereco }}</td>
+            <td class="border border-gray-300 px-4 py-2">{{ pedido.cep }}</td>
+            <td class="border border-gray-300 px-4 py-2">{{ pedido.data_pedido.strftime('%d/%m/%Y %H:%M:%S') }}</td>
+            <td class="border border-gray-300 px-4 py-2">{{ "%.2f"|format(pedido.total) }}</td>
+            <td class="border border-gray-300 px-4 py-2">
+              <ul class="list-disc list-inside space-y-1">
+                {% for item in pedido.produtos_json %}
+                  {% set produto = produtos | selectattr('id', 'equalto', item.produto_id) | first %}
+                  {% if produto %}
+                    <li>{{ produto.nome }} - Qtde: {{ item.quantidade }}</li>
+                  {% else %}
+                    <li>Produto ID {{ item.produto_id }} (não encontrado)</li>
+                  {% endif %}
+                {% endfor %}
+              </ul>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    {% else %}
+      <p class="text-gray-600">Nenhum pedido encontrado.</p>
+    {% endif %}
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="bg-[#232f3e] text-white px-6 py-12 mt-10">
+    <div class="max-w-7xl mx-auto flex flex-col lg:flex-row justify-between gap-10">
+      <div class="flex-1">
+        <h3 class="text-xl font-bold mb-2">Assine nossa Newsletter</h3>
+        <p class="mb-4">Receba novidades e ofertas especiais diretamente no seu e-mail.</p>
+        <form class="flex flex-col sm:flex-row gap-2">
+          <input type="email" placeholder="Seu e-mail" class="px-4 py-2 rounded text-black w-full sm:w-auto flex-1" />
+          <button type="submit" class="bg-yellow-400 text-black px-4 py-2 rounded">Inscrever</button>
+        </form>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10 flex-1 mt-10 lg:mt-0">
+        <div>
+          <h4 class="text-lg font-semibold mb-2">Conheça-nos</h4>
+          <ul class="space-y-1 text-sm">
+            <li>Sobre Nós</li>
+            <li>Carreiras</li>
+            <li>Comunicados</li>
+            <li>TechStore Science</li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="text-lg font-semibold mb-2">Ganhe dinheiro conosco</h4>
+          <ul class="space-y-1 text-sm">
+            <li>Venda seus produtos</li>
+            <li>Seja um afiliado</li>
+            <li>Publique seus livros</li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="text-lg font-semibold mb-2">Ajuda</h4>
+          <ul class="space-y-1 text-sm">
+            <li>Sua conta</li>
+            <li>Frete e entrega</li>
+            <li>Devoluções</li>
+            <li>Ajuda</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="border-t border-gray-600 mt-10 pt-6 text-center text-sm text-gray-300">
+      <p>Brasil | © 2021-2025 TechStore. Todos os direitos reservados.</p>
+      <p>Termos de uso | Política de Privacidade | Cookies</p>
+    </div>
+  </footer>
+
+</body>
+</html>

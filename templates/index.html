@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>TechShop</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+<body class="bg-gray-100">
+
+<!-- HEADER -->
+<header class="bg-[#232f3e] text-white py-4 px-6 flex items-center justify-between">
+  
+  <!-- Logo -->
+  <h1 class="text-2xl font-bold whitespace-nowrap">TechShop</h1>
+  
+  <!-- Barra de pesquisa centralizada -->
+  <div class="flex-1 flex justify-center">
+    <form action="/buscar" method="GET" class="flex w-full max-w-xl">
+      <input 
+        type="text" 
+        name="q" 
+        placeholder="Buscar produtos..." 
+        class="flex-grow px-4 py-2 rounded-l-md text-black focus:outline-none"
+      >
+      <button 
+        type="submit" 
+        class="bg-yellow-400 hover:bg-yellow-500 text-black px-4 rounded-r-md"
+      >
+        <i class="fa-solid fa-magnifying-glass"></i>
+      </button>
+    </form>
+  </div>
+  
+  <!-- Navegação -->
+  <nav class="flex space-x-6 text-white whitespace-nowrap">
+    <a href="/" class="hover:text-yellow-400 flex items-center gap-2">
+      <i class="fa-solid fa-house"></i> Home
+    </a>
+    <a href="/carrinho" class="hover:text-yellow-400 flex items-center gap-2">
+      <i class="fa-solid fa-cart-shopping"></i> Carrinho
+    </a>
+    <a href="{{ url_for('logout') if session.get('usuario_logado') else url_for('login') }}" class="hover:text-yellow-400 flex items-center gap-2">
+      <i class="fa-solid fa-user"></i> {{ session.get('usuario_logado') or 'Login' }}
+    </a>
+  </nav>
+</header>
+
+  <!-- CONTEÚDO PRINCIPAL -->
+  <main class="p-10">
+    <div class="produtos-container grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
+      {% for p in produtos %}
+      <div class="bg-white rounded shadow p-5 text-center">
+        <img src="{{ p.imagem_url }}" alt="{{ p.nome }}" class="w-full h-48 object-cover mb-4 rounded">
+        <h2 class="text-xl font-semibold">{{ p.nome }}</h2>
+        <p class="text-lg text-green-600 font-bold mb-2">R$ {{ p.preco }}</p>
+        <a href="/produto/{{ p.id }}" class="bg-yellow-400 hover:bg-yellow-500 text-black py-2 px-4 rounded">Ver Detalhes</a>
+      </div>
+      {% endfor %}
+    </div>
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="bg-[#232f3e] text-white px-6 py-12">
+    <div class="max-w-7xl mx-auto flex flex-col lg:flex-row justify-between gap-10">
+
+      <!-- Newsletter -->
+      <div class="flex-1">
+        <h3 class="text-xl font-bold mb-2">Assine nossa Newsletter</h3>
+        <p class="mb-4">Receba novidades e ofertas especiais diretamente no seu e-mail.</p>
+        <form class="flex flex-col sm:flex-row gap-2">
+          <input type="email" placeholder="Seu e-mail" class="px-4 py-2 rounded text-black w-full sm:w-auto flex-1">
+          <button type="submit" class="bg-yellow-400 text-black px-4 py-2 rounded">Inscrever</button>
+        </form>
+      </div>
+
+      <!-- Espaço entre Newsletter e links -->
+      <div class="mt-10 lg:mt-0 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10 flex-1">
+
+        <!-- Conheça-nos -->
+        <div>
+          <h4 class="text-lg font-semibold mb-2">Conheça-nos</h4>
+          <ul class="space-y-1 text-sm">
+            <li>Sobre Nós</li>
+            <li>Carreiras</li>
+            <li>Comunicados</li>
+            <li>TechStore Science</li>
+          </ul>
+        </div>
+
+        <!-- Ganhe dinheiro conosco -->
+        <div>
+          <h4 class="text-lg font-semibold mb-2">Ganhe dinheiro conosco</h4>
+          <ul class="space-y-1 text-sm">
+            <li>Venda seus produtos</li>
+            <li>Seja um afiliado</li>
+            <li>Publique seus livros</li>
+          </ul>
+        </div>
+
+        <!-- Ajuda -->
+        <div>
+          <h4 class="text-lg font-semibold mb-2">Ajuda</h4>
+          <ul class="space-y-1 text-sm">
+            <li>Sua conta</li>
+            <li>Frete e entrega</li>
+            <li>Devoluções</li>
+            <li>Ajuda</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- Rodapé inferior -->
+    <div class="border-t border-gray-600 mt-10 pt-6 text-center text-sm text-gray-300">
+      <p>Brasil | © 2021-2025 TechStore. Todos os direitos reservados.</p>
+      <p>Termos de uso | Política de Privacidade | Cookies</p>
+    </div>
+  </footer>
+
+</body>
+</html>
+
