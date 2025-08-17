@@ -8,7 +8,7 @@ import json
 app = Flask(__name__)
 app.secret_key = 'sua_chave_secreta_segura'
 
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///meu_banco.db'  
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://admin:techstoredb1@techstoredb1.c1g88m6q8sd4.us-east-1.rds.amazonaws.com/techstore'  
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 db = SQLAlchemy(app)
@@ -279,7 +279,11 @@ def debug_pedidos():
         resultado += f"<p>Pedido {p.id}: {p.nome} {p.sobrenome}, total: {p.total}, produtos: {p.produtos}</p>"
     return resultado or "Nenhum pedido encontrado."
 
+@app.route("/health")
+def health():
+    return "OK", 200
+
 if __name__ == '__main__':
     with app.app_context():
         db.create_all()
-    app.run(debug=True)
+    app.run(host='0.0.0.0', port=5000, debug=True)
