@@ -4,11 +4,12 @@ from functools import wraps
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
 import json
+import os
 
 app = Flask(__name__)
 app.secret_key = 'sua_chave_secreta_segura'
 
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://admin:techstoredb1@techstoredb1.c1g88m6q8sd4.us-east-1.rds.amazonaws.com/techstore'  
+app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv("DATABASE_URL")
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 db = SQLAlchemy(app)
