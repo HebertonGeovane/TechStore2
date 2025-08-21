@@ -98,7 +98,7 @@ Para concluir o projeto com sucesso, os alunos devem:
 
 Acesse o guia completo com o passo a passo do projeto clicando no link abaixo:
 
-👉 [Clique aqui para acessar o guia do projeto no Notion](https://www.notion.so/seunome/TechStore-Passo-a-Passo-123abc456def)
+### 👉 [Clique aqui para acessar o guia do projeto no Notion](https://www.notion.so/2561dfd9f12380e084d0e134371f7ca7?source=copy_link)
 ---
 
 ## 🧰 Tecnologias e Serviços AWS Utilizados
