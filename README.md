@@ -119,8 +119,8 @@ Acesse o guia completo com o passo a passo do projeto clicando no link abaixo:
 
 ## 🧑‍🏫 Projeto criado por
 
-👨‍🏫 **Heberton Geovane**  
-[![LinkedIn](https://img.shields.io/badge/-LinkedIn-0A66C2?style=flat&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/hebertong/)
+**Heberton Geovane**  
+[![LinkedIn](https://img.shields.io/badge/-LinkedIn-0A66C2?style=flat&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/heberton-geovane/)
 
 ---
 
